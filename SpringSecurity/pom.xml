@@ -3,19 +3,32 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>SpringFamily</artifactId>
         <groupId>com.ITIS</groupId>
+        <artifactId>SpringFamily</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+<!--    <parent>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--        <version>2.2.1.RELEASE</version>-->
+<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+<!--    </parent>-->
     <packaging>pom</packaging>
     <modules>
         <module>SpringSecurityDemo1</module>
         <module>acl_parent</module>
-        <module>service_base</module>
     </modules>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>SpringSecurity</artifactId>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+    </dependencies>
 
 </project>
