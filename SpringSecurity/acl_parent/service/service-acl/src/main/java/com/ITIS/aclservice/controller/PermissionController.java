@@ -3,7 +3,7 @@ package com.ITIS.aclservice.controller;
 
 import com.ITIS.aclservice.entity.Permission;
 import com.ITIS.aclservice.service.PermissionService;
-import com.ITIS.utils.utils.R;
+import com.ITIS.utils.utils.CRModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,23 +29,23 @@ public class PermissionController {
     //获取全部菜单
     @ApiOperation(value = "查询所有菜单")
     @GetMapping
-    public R indexAllPermission() {
+    public CRModel indexAllPermission() {
         List<Permission> list =  permissionService.queryAllMenu();
-        return R.ok().data("children",list);
+        return CRModel.ok().data("children",list);
     }
 
     @ApiOperation(value = "给角色分配权限")
     @PostMapping("/doAssign")
-    public R doAssign(String roleId,String[] permissionId) {
+    public CRModel doAssign(String roleId, String[] permissionId) {
         permissionService.saveRolePermissionRealtionShipGuli(roleId,permissionId);
-        return R.ok();
+        return CRModel.ok();
     }
 
     @ApiOperation(value = "根据角色获取菜单")
     @GetMapping("toAssign/{roleId}")
-    public R toAssign(@PathVariable String roleId) {
+    public CRModel toAssign(@PathVariable String roleId) {
         List<Permission> list = permissionService.selectAllMenu(roleId);
-        return R.ok().data("children", list);
+        return CRModel.ok().data("children", list);
     }
 
 }

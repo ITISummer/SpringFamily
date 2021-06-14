@@ -1,7 +1,7 @@
 package com.ITIS.aclservice.controller;
 
 import com.ITIS.aclservice.service.IndexService;
-import com.ITIS.utils.utils.R;
+import com.ITIS.utils.utils.CRModel;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,11 +25,11 @@ public class IndexController {
      * 根据token获取用户信息
      */
     @GetMapping("info")
-    public R info(){
+    public CRModel info(){
         //获取当前登录用户用户名
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Map<String, Object> userInfo = indexService.getUserInfo(username);
-        return R.ok().data(userInfo);
+        return CRModel.ok().data(userInfo);
     }
 
     /**
@@ -37,16 +37,16 @@ public class IndexController {
      * @return
      */
     @GetMapping("menu")
-    public R getMenu(){
+    public CRModel getMenu(){
         //获取当前登录用户用户名
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<JSONObject> permissionList = indexService.getMenu(username);
-        return R.ok().data("permissionList", permissionList);
+        return CRModel.ok().data("permissionList", permissionList);
     }
 
     @PostMapping("logout")
-    public R logout(){
-        return R.ok();
+    public CRModel logout(){
+        return CRModel.ok();
     }
 
 }

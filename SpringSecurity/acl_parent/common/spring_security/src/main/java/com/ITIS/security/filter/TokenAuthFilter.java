@@ -1,6 +1,6 @@
 package com.ITIS.security.filter;
 
-import com.ITIS.security.security.TokenManager;
+import com.ITIS.security.security.JwtTokenManager;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,11 +20,11 @@ import java.util.List;
 
 public class TokenAuthFilter extends BasicAuthenticationFilter {
 
-    private TokenManager tokenManager;
+    private JwtTokenManager jwtTokenManager;
     private RedisTemplate redisTemplate;
-    public TokenAuthFilter(AuthenticationManager authenticationManager,TokenManager tokenManager,RedisTemplate redisTemplate) {
+    public TokenAuthFilter(AuthenticationManager authenticationManager, JwtTokenManager jwtTokenManager, RedisTemplate redisTemplate) {
         super(authenticationManager);
-        this.tokenManager = tokenManager;
+        this.jwtTokenManager = jwtTokenManager;
         this.redisTemplate = redisTemplate;
     }
 
@@ -44,7 +44,7 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
         String token = request.getHeader("token");
         if(token != null) {
             //从token获取用户名
-            String username = tokenManager.getUserInfoFromToken(token);
+            String username = jwtTokenManager.getUserInfoFromToken(token);
             //从redis获取对应权限列表
             List<String> permissionValueList = (List<String>)redisTemplate.opsForValue().get(username);
             Collection<GrantedAuthority> authority = new ArrayList<>();

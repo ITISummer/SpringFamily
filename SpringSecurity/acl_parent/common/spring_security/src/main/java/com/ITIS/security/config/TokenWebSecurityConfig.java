@@ -4,7 +4,7 @@ import com.ITIS.security.filter.TokenAuthFilter;
 import com.ITIS.security.filter.TokenLoginFilter;
 import com.ITIS.security.security.DefaultPasswordEncoder;
 import com.ITIS.security.security.TokenLogoutHandler;
-import com.ITIS.security.security.TokenManager;
+import com.ITIS.security.security.JwtTokenManager;
 import com.ITIS.security.security.UnAuthEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
+ * spring-security 配置类 + jwt token
  * 认证后从 redis 中获取权限列表
  */
 @Configuration
@@ -25,22 +26,29 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private TokenManager tokenManager;
+    private JwtTokenManager jwtTokenManager;
     private RedisTemplate redisTemplate;
     private DefaultPasswordEncoder defaultPasswordEncoder;
     private UserDetailsService userDetailsService;
 
+    /**
+     * 注入全部属性
+     * @param userDetailsService
+     * @param defaultPasswordEncoder
+     * @param jwtTokenManager
+     * @param redisTemplate
+     */
     @Autowired
     public TokenWebSecurityConfig(UserDetailsService userDetailsService, DefaultPasswordEncoder defaultPasswordEncoder,
-                                  TokenManager tokenManager, RedisTemplate redisTemplate) {
+                                  JwtTokenManager jwtTokenManager, RedisTemplate redisTemplate) {
         this.userDetailsService = userDetailsService;
         this.defaultPasswordEncoder = defaultPasswordEncoder;
-        this.tokenManager = tokenManager;
+        this.jwtTokenManager = jwtTokenManager;
         this.redisTemplate = redisTemplate;
     }
 
     /**
-     * 配置设置
+     * http 配置
      * @param http
      * @throws Exception
      */
@@ -53,9 +61,9 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and().logout().logoutUrl("/admin/acl/index/logout")//退出路径
-                .addLogoutHandler(new TokenLogoutHandler(tokenManager,redisTemplate)).and()
-                .addFilter(new TokenLoginFilter(authenticationManager(), tokenManager, redisTemplate))
-                .addFilter(new TokenAuthFilter(authenticationManager(), tokenManager, redisTemplate)).httpBasic();
+                .addLogoutHandler(new TokenLogoutHandler(jwtTokenManager,redisTemplate)).and()
+                .addFilter(new TokenLoginFilter(authenticationManager(), jwtTokenManager, redisTemplate))
+                .addFilter(new TokenAuthFilter(authenticationManager(), jwtTokenManager, redisTemplate)).httpBasic();
     }
 
     //调用userDetailsService和密码处理

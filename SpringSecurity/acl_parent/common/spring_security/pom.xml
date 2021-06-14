@@ -12,10 +12,6 @@
     <artifactId>spring_security</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.ITIS</groupId>
-            <artifactId>service_base</artifactId>
-        </dependency>
          <!-- Spring Security依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -25,6 +21,12 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ITIS</groupId>
+            <artifactId>service_base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.ITIS</groupId>

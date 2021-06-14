@@ -1,6 +1,6 @@
 package com.ITIS.security.security;
 
-import com.ITIS.utils.utils.R;
+import com.ITIS.utils.utils.CRModel;
 import com.ITIS.utils.utils.ResponseUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 退出处理器
+ * 退出处理器 - redis 中移除 jwt token
  */
 public class TokenLogoutHandler implements LogoutHandler {
-    private TokenManager tokenManager;
+    private JwtTokenManager jwtTokenManager;
     private RedisTemplate redisTemplate;
 
-    public TokenLogoutHandler(TokenManager tokenManager,RedisTemplate redisTemplate) {
-        this.tokenManager = tokenManager;
+    public TokenLogoutHandler(JwtTokenManager jwtTokenManager, RedisTemplate redisTemplate) {
+        this.jwtTokenManager = jwtTokenManager;
         this.redisTemplate = redisTemplate;
     }
 
@@ -34,11 +34,11 @@ public class TokenLogoutHandler implements LogoutHandler {
         String token = request.getHeader("token");
         if(token != null) {
             //移除
-            tokenManager.removeToken(token);
+            jwtTokenManager.removeToken(token);
             //从token获取用户名
-            String username = tokenManager.getUserInfoFromToken(token);
+            String username = jwtTokenManager.getUserInfoFromToken(token);
             redisTemplate.delete(username);
         }
-        ResponseUtil.out(response, R.ok());
+        ResponseUtil.out(response, CRModel.ok());
     }
 }

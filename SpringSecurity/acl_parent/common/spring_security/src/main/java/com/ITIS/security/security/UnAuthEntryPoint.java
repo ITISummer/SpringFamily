@@ -1,6 +1,6 @@
 package com.ITIS.security.security;
 
-import com.ITIS.utils.utils.R;
+import com.ITIS.utils.utils.CRModel;
 import com.ITIS.utils.utils.ResponseUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -16,6 +16,6 @@ import java.io.IOException;
 public class UnAuthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        ResponseUtil.out(httpServletResponse, R.error());
+        ResponseUtil.out(httpServletResponse, CRModel.error());
     }
 }

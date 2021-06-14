@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @SpringBootApplication
-@MapperScan("com.ITIS.SpringSecurityDemo1.mapper")
+@MapperScan("com.ITIS.SpringSecurityDemo1.mapper") //扫描 mapper 包下的各个 mappers
 //开启方法的角色安全认证
 @EnableGlobalMethodSecurity(securedEnabled=true,prePostEnabled = true)
 public class Securitydemo1Application {

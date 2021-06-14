@@ -2,8 +2,8 @@ package com.ITIS.security.filter;
 
 import com.ITIS.security.entity.SecurityUser;
 import com.ITIS.security.entity.User;
-import com.ITIS.security.security.TokenManager;
-import com.ITIS.utils.utils.R;
+import com.ITIS.security.security.JwtTokenManager;
+import com.ITIS.utils.utils.CRModel;
 import com.ITIS.utils.utils.ResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,13 +26,13 @@ import java.util.ArrayList;
  */
 public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 
-    private TokenManager tokenManager;
+    private JwtTokenManager jwtTokenManager;
     private RedisTemplate redisTemplate;
     private AuthenticationManager authenticationManager;
 
-    public TokenLoginFilter(AuthenticationManager authenticationManager, TokenManager tokenManager, RedisTemplate redisTemplate) {
+    public TokenLoginFilter(AuthenticationManager authenticationManager, JwtTokenManager jwtTokenManager, RedisTemplate redisTemplate) {
         this.authenticationManager = authenticationManager;
-        this.tokenManager = tokenManager;
+        this.jwtTokenManager = jwtTokenManager;
         this.redisTemplate = redisTemplate;
         this.setPostOnly(false);
         /**
@@ -78,11 +78,11 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         //认证成功，得到认证成功之后用户信息
         SecurityUser user = (SecurityUser)authResult.getPrincipal();
         //根据用户名生成token
-        String token = tokenManager.createToken(user.getCurrentUserInfo().getUsername());
+        String token = jwtTokenManager.createToken(user.getCurrentUserInfo().getUsername());
         //把用户名称和用户权限列表放到redis
         redisTemplate.opsForValue().set(user.getCurrentUserInfo().getUsername(),user.getPermissionValueList());
         //返回token
-        ResponseUtil.out(response, R.ok().data("token",token));
+        ResponseUtil.out(response, CRModel.ok().data("token",token));
     }
 
     /**
@@ -95,6 +95,6 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
      */
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed)
             throws IOException, ServletException {
-        ResponseUtil.out(response, R.error());
+        ResponseUtil.out(response, CRModel.error());
     }
 }

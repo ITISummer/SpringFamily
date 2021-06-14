@@ -1,0 +1,13 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!--[Hibernate - Configuration](https://www.tutorialspoint.com/hibernate/hibernate_configuration.htm)-->
+<hibernate-configuration>
+    <session-factory>
+<!--        配置 hibernate 基本属性 -->
+        <property name = "hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+    </session-factory>
+</hibernate-configuration>

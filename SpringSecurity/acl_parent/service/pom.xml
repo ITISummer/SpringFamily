@@ -9,10 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service</artifactId>
+    <artifactId>com.itis.springcloud.service</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>service-acl</module>
+        <module>com.itis.springcloud.service-acl</module>
     </modules>
  <dependencies>
 

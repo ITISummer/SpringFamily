@@ -6,6 +6,7 @@ import com.ITIS.aclservice.service.IndexService;
 import com.ITIS.aclservice.service.PermissionService;
 import com.ITIS.aclservice.service.RoleService;
 import com.ITIS.aclservice.service.UserService;
+import com.ITIS.utils.exceptionhandler.GuliException;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -41,7 +42,7 @@ public class IndexServiceImpl implements IndexService {
         Map<String, Object> result = new HashMap<>();
         User user = userService.selectByUsername(username);
         if (null == user) {
-            //throw new GuliException(ResultCodeEnum.FETCH_USERINFO_ERROR);
+//            throw new GuliException(ResultCodeEnum.FETCH_USERINFO_ERROR);
         }
 
         //根据用户id获取角色

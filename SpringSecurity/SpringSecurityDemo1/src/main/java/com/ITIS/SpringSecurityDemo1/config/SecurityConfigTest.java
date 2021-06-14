@@ -41,14 +41,14 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
      * 配置对象 - 实现 remember me 功能
      * @return
      */
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
-        jdbcTokenRepository.setDataSource(dataSource);
-        //自动创建 token 表-已创建的话则记得注释掉
-        //jdbcTokenRepository.setCreateTableOnStartup(true);
-        return jdbcTokenRepository;
-    }
+//    @Bean
+//    public PersistentTokenRepository persistentTokenRepository() {
+//        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+//        jdbcTokenRepository.setDataSource(dataSource);
+//        //自动创建 token 表-已创建的话则记得注释掉
+//        //jdbcTokenRepository.setCreateTableOnStartup(true);
+//        return jdbcTokenRepository;
+//    }
 
 
     /**
@@ -62,30 +62,31 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
         http.logout().logoutUrl("/logout").logoutSuccessUrl("/test/hello").permitAll();
 
         /*--------------------------设置 处理异常 功能--------------------------*/
-        http.exceptionHandling().accessDeniedPage("/unauth.html");
+        http.exceptionHandling().accessDeniedPage("/unAuth.html");
         /*-------------------------------配置没有权限访问跳转自定义页面-------------------------------*/
         http.formLogin()   //自定义自己编写的登录页面
-                .loginPage("/on.html")  //登录页面设置
-                .loginProcessingUrl("/user/login")   //登录访问路径
-                .defaultSuccessUrl("/success.html").permitAll()  //登录成功之后，跳转路径
-                .failureUrl("/unauth.html");
-        /*----------------------设置权限与角色-当前登录用户，只有具有admins权限才可以访问这个路径--------------------------*/
+                .loginPage("/login.html")  //登录页面设置
+                .loginProcessingUrl("/user/login")   //登录访问路径-登录表单提交请求的路径
+                .defaultSuccessUrl("/index") //登录成功之后，跳转路径
+                .failureUrl("/unAuth.html").permitAll() ;
+        /*----------------------设置权限与角色-当前登录用户，设置哪些路径可以被拥有哪些权限的用户访问--------------------------*/
         http.authorizeRequests()
-                .antMatchers("/","/test/hello","/user/login").permitAll() //设置哪些路径可以直接访问，不需要认证
-                //1 hasAuthority方法
-                // .antMatchers("/test/index").hasAuthority("admins")
+                 //设置哪些路径可以直接访问，不需要认证
+                .antMatchers("/","/user/login").permitAll()
+                //1 hasAuthority方法，当前登录的用户，只有具有 admins 权限才可以访问设置的路径
+                // .antMatchers("/index").hasAuthority("admins")
                 //2 hasAnyAuthority方法，用户有其中一个权限都可以访问指定路径
-                // .antMatchers("/test/index").hasAnyAuthority("admins,manager")
+                // .antMatchers("/index").hasAnyAuthority("admins,manager")
                 //3 hasRole方法   ROLE_sale
-                .antMatchers("/test/index").hasRole("sale")
                 //4 hasAnyRole方法   ROLE_sale,ROLE_admin，用户有其中一个角色都可以访问指定路径
-//                .antMatchers("/test/index").hasAnyRole("sale,admin")
+                //.antMatchers("/index").hasAnyRole("sale,admin")
+//                .antMatchers("/index").hasRole("sale") //只有有 sale 角色的用户才可以访问的路径
                 .anyRequest().authenticated();
 
         /*--------------------------设置 remember me 功能--------------------------*/
-        http.rememberMe().tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(60)//设置 token 有效时长，单位秒
-                .userDetailsService(userDetailsService);
+//        http.rememberMe().tokenRepository(persistentTokenRepository())
+//                .tokenValiditySeconds(60)//设置 token 有效时长，单位秒
+//                .userDetailsService(userDetailsService);
         /*--------------------------
         设置跨站请求伪造功能(cross-site request forgery)
         跨站请求攻击，简单地说，是攻击者通过一些技术手段欺骗用户的浏览器去访问
@@ -100,6 +101,6 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
         --------------------------*/
         // http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         /*--------------------------关闭跨站请求伪造功能--------------------------*/
-//        http.csrf().disable();  //关闭csrf防护
+        http.csrf().disable();  //关闭csrf防护
     }
 }

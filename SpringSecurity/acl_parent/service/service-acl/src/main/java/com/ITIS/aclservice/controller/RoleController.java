@@ -31,7 +31,7 @@ public class RoleController {
 
     @ApiOperation(value = "获取角色分页列表")
     @GetMapping("{page}/{limit}")
-    public R index(
+    public CRModel index(
             @ApiParam(name = "page", value = "当前页码", required = true)
             @PathVariable Long page,
 
@@ -44,14 +44,14 @@ public class RoleController {
             wrapper.like("role_name",role.getRoleName());
         }
         roleService.page(pageParam,wrapper);
-        return R.ok().data("items", pageParam.getRecords()).data("total", pageParam.getTotal());
+        return CRModel.ok().data("items", pageParam.getRecords()).data("total", pageParam.getTotal());
     }
 
     @ApiOperation(value = "新增角色")
     @PostMapping("save")
-    public R save(@RequestBody Role role) {
+    public CRModel save(@RequestBody Role role) {
         roleService.save(role);
-        return R.ok();
+        return CRModel.ok();
     }
 }
 

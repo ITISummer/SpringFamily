@@ -15,11 +15,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("userDetailsService")
+@Service("userDetailsService") //指定名字
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UsersMapper usersMapper;
+
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList("user,admin");
+//        return new User("summer",new BCryptPasswordEncoder().encode("summer"),null);
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,4 +44,6 @@ public class MyUserDetailsService implements UserDetailsService {
         return new User(users.getUsername(),
                 new BCryptPasswordEncoder().encode(users.getPassword()),auths);
     }
+
 }
+

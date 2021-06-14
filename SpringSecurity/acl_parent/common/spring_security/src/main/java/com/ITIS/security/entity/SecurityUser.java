@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * 返回对象
+ * spring-security 返回对象
  */
 @Data
 public class SecurityUser implements UserDetails {

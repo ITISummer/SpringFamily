@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * 存储在 spring-security 中的精简对象
+ */
 @Data
 @ApiModel(description = "用户实体类")
 public class User implements Serializable {

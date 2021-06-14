@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--[IntelliJ IDEA下自动生成Hibernate映射文件以及实体类](https://blog.csdn.net/qq_34197553/article/details/77718925)-->
+<hibernate-mapping>
+    <class name="com.itis.spring4.hibernate.pojo.Account" table="accounts">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="native"/>
+        </id>
+        <property name="username" column="user_name" type="java.lang.String"/>
+        <property name="balance" column="balance" type="java.lang.Integer"/>
+    </class>
+</hibernate-mapping>

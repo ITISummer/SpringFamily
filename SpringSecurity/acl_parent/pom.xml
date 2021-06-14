@@ -15,13 +15,14 @@
 <!--    </parent>-->
     <artifactId>acl_parent</artifactId>
     <packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
 
     <modules>
         <module>common</module>
         <module>infrastructure</module>
-        <module>service</module>
+        <module>com.itis.springcloud.service</module>
     </modules>
-    <modelVersion>4.0.0</modelVersion>
+
     <properties>
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.0.5</mybatis-plus.version>

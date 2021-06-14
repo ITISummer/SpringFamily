@@ -11,11 +11,11 @@ import java.util.Date;
  * 使用 jwt 生成 token
  */
 @Component
-public class TokenManager {
+public class JwtTokenManager {
     //token有效时长
     private long tokenEncryption = 24*60*60*1000;
     //编码秘钥
-    private String tokenSignKey = "123456";
+    private String tokenSignKey = "ITIS.com";
 
     /**
      * 使用jwt根据用户名生成token

@@ -5,7 +5,7 @@ import com.ITIS.aclservice.entity.User;
 import com.ITIS.aclservice.service.RoleService;
 import com.ITIS.aclservice.service.UserService;
 import com.ITIS.utils.utils.MD5;
-import com.ITIS.utils.utils.R;
+import com.ITIS.utils.utils.CRModel;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -38,7 +38,7 @@ public class UserController {
 
     @ApiOperation(value = "获取管理用户分页列表")
     @GetMapping("{page}/{limit}")
-    public R index(
+    public CRModel index(
             @ApiParam(name = "page", value = "当前页码", required = true)
             @PathVariable Long page,
 
@@ -54,29 +54,29 @@ public class UserController {
         }
 
         IPage<User> pageModel = userService.page(pageParam, wrapper);
-        return R.ok().data("items", pageModel.getRecords()).data("total", pageModel.getTotal());
+        return CRModel.ok().data("items", pageModel.getRecords()).data("total", pageModel.getTotal());
     }
 
     @ApiOperation(value = "新增管理用户")
     @PostMapping("save")
-    public R save(@RequestBody User user) {
+    public CRModel save(@RequestBody User user) {
         user.setPassword(MD5.encrypt(user.getPassword()));
         userService.save(user);
-        return R.ok();
+        return CRModel.ok();
     }
 
     @ApiOperation(value = "根据用户获取角色数据")
     @GetMapping("/toAssign/{userId}")
-    public R toAssign(@PathVariable String userId) {
+    public CRModel toAssign(@PathVariable String userId) {
         Map<String, Object> roleMap = roleService.findRoleByUserId(userId);
-        return R.ok().data(roleMap);
+        return CRModel.ok().data(roleMap);
     }
 
     @ApiOperation(value = "根据用户分配角色")
     @PostMapping("/doAssign")
-    public R doAssign(@RequestParam String userId, @RequestParam String[] roleId) {
+    public CRModel doAssign(@RequestParam String userId, @RequestParam String[] roleId) {
         roleService.saveUserRoleRealtionShip(userId,roleId);
-        return R.ok();
+        return CRModel.ok();
     }
 }
 

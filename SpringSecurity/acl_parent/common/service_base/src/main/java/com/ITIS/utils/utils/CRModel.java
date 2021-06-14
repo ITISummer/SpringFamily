@@ -6,7 +6,7 @@ import java.util.Map;
 
 //统一返回结果的类
 @Data
-public class R {
+public class CRModel {
     /**
      * 成功还是失败
      */
@@ -25,11 +25,11 @@ public class R {
     private Map<String, Object> data = new HashMap<String, Object>();
 
     //把构造方法私有
-    private R() {}
+    private CRModel() {}
 
     //静态方法 - 成功
-    public static R ok() {
-        R r = new R();
+    public static CRModel ok() {
+        CRModel r = new CRModel();
         r.setSuccess(true);
         r.setCode(20000);
         r.setMessage("成功");
@@ -37,35 +37,35 @@ public class R {
     }
 
     //静态方法 - 失败
-    public static R error() {
-        R r = new R();
+    public static CRModel error() {
+        CRModel r = new CRModel();
         r.setSuccess(false);
         r.setCode(20001);
         r.setMessage("失败");
         return r;
     }
 
-    public R success(Boolean success){
+    public CRModel success(Boolean success){
         this.setSuccess(success);
         return this;
     }
 
-    public R message(String message){
+    public CRModel message(String message){
         this.setMessage(message);
         return this;
     }
 
-    public R code(Integer code){
+    public CRModel code(Integer code){
         this.setCode(code);
         return this;
     }
 
-    public R data(String key, Object value){
+    public CRModel data(String key, Object value){
         this.data.put(key, value);
         return this;
     }
 
-    public R data(Map<String, Object> map){
+    public CRModel data(Map<String, Object> map){
         this.setData(map);
         return this;
     }
