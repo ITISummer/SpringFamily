@@ -37,7 +37,7 @@
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<!-- 别名处理 -->
-		<property name="typeAliasesPackage" value="com.ITIS.MybatisPlus01.pojo"></property>
+		<property name="typeAliasesPackage" value="com.itis.MybatisPlus01.pojo"></property>
 		
 		<!-- 注入全局MP策略配置 -->
 		<property name="globalConfig" ref="globalConfiguration"></property>
@@ -59,6 +59,6 @@
 		配置mybatis 扫描mapper接口的路径
 	 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.ITIS.MybatisPlus01.mapper"></property>
+		<property name="basePackage" value="com.itis.MybatisPlus01.mapper"></property>
 	</bean>
 </beans>
